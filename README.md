@@ -1,4 +1,4 @@
-# Reach
+# React
 
 # CDN
 babel : <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
