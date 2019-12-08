@@ -26,11 +26,13 @@
                 e.preventDefault();
                 let value = parseInt(this.state.value);
                 if (value === this.state.first * this.state.second) {
-                    this.setState({
-                        result: value + ' 정답',
-                        first: Math.ceil(Math.random() * 9),
-                        second: Math.ceil(Math.random() * 9),
-                        value: '',
+                    this.setState((prevState) => { // 예전값을 가지고 있다.
+                        return {
+                            result: prevState.value + ' 정답',
+                            first: Math.ceil(Math.random() * 9),
+                            second: Math.ceil(Math.random() * 9),
+                            value: '',
+                        }
                     });
                 }
                 else {
@@ -39,28 +41,35 @@
                         value: '',
                     });
                 }
+                this.input.autofocus = true;
+
             };
             onChange = (e) => this.setState({ value: e.target.value });
+            onRefInput = (c) => { this.input = c; };
+            input; /* ref를 붙이면 DOM을 제어할 수 있다. */
             render() {
                 /* content안에 {}는 자바스크립트를 쓸 수 있다. 
                    싱글 태그는 항상 닫아주자! '/'*/
                 return (
-                    <div>
+                    <React.Fragment>
                         <div>{this.state.first} 곱하기 {this.state.second}는?</div>
                         <form onSubmit={this.onSubmit}>
                             <input type="number"
                                 value={this.state.value}
-                                onChange={this.onChange} />
+                                onChange={this.onChange}
+                                ref={this.onRefInput}
+                            />
+                            <input type="number" />
                             <button>입력!</button>
                         </form>
                         <div>{this.state.result}</div>
-                    </div>
+                    </React.Fragment>
                 );
             }
         }
     </script>
     <script type="text/babel">
-        ReactDOM.render(<div><GuGuDan /> <GuGuDan /> <GuGuDan /></div>, document.querySelector('#root'));
+        ReactDOM.render(<React.Fragment><GuGuDan /></React.Fragment>, document.querySelector('#root'));
     </script>
 </body>
 
