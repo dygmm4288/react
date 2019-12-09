@@ -6,10 +6,49 @@ class WordRelay extends Component {
         super(props);
     }
     state = {
-        text: 'Hello, webpack',
+        word: '이진호',
+        value: '',
+        result: '',
     };
+
+    onSubmitForm = (e) => {
+        e.preventDefault();
+        if (this.state.word[this.state.word.length - 1] === this.state.value[0]) {
+            this.setState({
+                result: '딩동댕',
+                word: this.state.value,
+                value: '',
+            });
+            this.input.focus();
+        } else {
+            this.setState({
+                result: '땡',
+                value: '',
+            });
+        }
+    };
+    onChangeInput = (e) => {
+        this.setState({ value: e.target.value });
+    };
+
+    input;
+
+    onRefInuput = (c) => {
+        this.input = c;
+    };
+
     render() {
-        return <h1>{this.state.text}</h1>;
+        return (
+            <>
+                <div>{this.state.word}</div>
+                <form onSubmit={this.onSubmitForm}>
+                    <input ref={this.onRefInuput} value={this.state.value} onChange={this.onChangeInput} />
+                    <button>입력!</button>
+                </form>
+                <div>{this.state.result}</div>
+
+            </>
+        )
     }
 }
 

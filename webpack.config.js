@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     name: 'word-relay-setting',
@@ -12,18 +13,30 @@ module.exports = {
     entry: {
         app: ['./client'],
     }, //입력
-    module: {
+    module: { //loaders
         rules: [{
             test: /\.jsx?/,
             loader: 'babel-loader',
             options: {
-                presets: ['@babel/preset-env', '@babel/preset-react'],
-                plugins: ['@babel/plugin-proposal-class-properties'],
+                presets: [
+                    ['@babel/preset-env', {
+                        targets: {
+                            browsers: ['> 5% in KR', 'last 2 chrome versions'],
+                        },
+                        debug: true,
+                    }], '@babel/preset-react'],
+                plugins: [
+                    '@babel/plugin-proposal-class-properties',
+                    'react-hot-loader/babel',
+                ],
             },
         }],
     },
+    plugins: [
+        new webpack.LoaderOptionsPlugin({ debug: true }),
+    ],
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: __dirname,
         filename: 'app.js',
     }, // 출력
 };
