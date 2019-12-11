@@ -68,7 +68,7 @@ module.exports = 컴포넌트이름;
 ```
 ## 7. babel 설치하기
 ```npm
-npm i -D @babel/preset-evn @babel/core @babel/plugin-proposal-class-properties @babel/preset-react babel-loader
+npm i -D @babel/preset-en @babel/core @babel/plugin-proposal-class-properties @babel/preset-react babel-loader
 ```
   1. @babel/core : babel의 기본적인거
   2. @babel/preset-evn : 최신문법을 예전 문법으로
