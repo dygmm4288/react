@@ -9,8 +9,8 @@ reactDOM: <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.
 # WebPack 설치하기
 ## 1. npm init
 {author : 'username' , license : 'MIT'}
-## 2. npm i -D react react-dom 
-develope mode로 react react-dom 설치
+## 2. npm i -D react react-dom webpack webpack-cli
+develope mode로 react react-dom webpack webpack-cli 설치
 ## 3. webpack.config.js 만들기
 ```js
   const path = require('path');
