@@ -31,6 +31,7 @@ const BaseBall = () => {
         setAnswer(getNumbers());
         setTries([]);
     };
+
     const onSubmitForm = (e) => {
         e.preventDefault();
         if (value === answer.join('')) {
