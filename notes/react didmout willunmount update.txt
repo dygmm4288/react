@@ -1,0 +1,18 @@
+component lift cycle
+
+componentDidMount()
+-> 컴포넌트가 첫 렌더링 된후
+-> render()안에서 setState는 무한반복을 하게되서 안됨
+-> 비동기 요청을 많이 함
+그럴 경우 didmount사용
+componentWillUnMount()
+-> 컴포넌트가 제거되기 전
+-> 컴포넌트 didmount에서 사용했던 것을 제거하는 것 
+-> 비동기 요청 정리
+-> 부모에 의해서 나를 없애게 될때
+componentDidUpdate()
+-> 컴포넌트 업데이트
+
+class의 경우 -> constructor -> render -> ref -> componentDidMount
+-> (setState/props바뀔때 -> render -> shouldComponentUpdate(return true) -> componentDidUpdate()
+부모가 나를 없앨 때 -> componentWillUnMount -> 소멸

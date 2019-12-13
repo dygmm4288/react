@@ -74,5 +74,7 @@ npm i -D @babel/preset-en @babel/core @babel/plugin-proposal-class-properties @b
   2. @babel/preset-evn : 최신문법을 예전 문법으로
   4. @babel/preset-react : jsx바꿔주는거
   3. babel-loader : 바벨이랑 연결해주는거
-
+# webpack-dev-server & react-hot-loader
+./dist/app.js를 뺴야 한다. index.html -> <script src="./app.js"> 
+webpack dev server에서 app.js를 만드는 모양
 
