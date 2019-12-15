@@ -11,11 +11,13 @@ import ResponseCheckHooks from './component/ResponseCheckHooks.jsx';
 import RSP from './component/RSP.jsx';
 import RSPHooks from './component/RSPHooks.jsx';
 import Lotto from './component/Lotto.jsx';
+import LottoHooks from './component/LottoHooks.jsx';
 //const Hot = hot(WordRelay);
 //const Hot = hot(BaseBall);
 //const Hot = hot(BaseBallHooks);
 //const Hot = hot(ResponseCheckHooks);
 //const Hot = hot(RSP);
-const Hot = hot(Lotto);
+//const Hot = hot(Lotto);
+const Hot = hot(LottoHooks);
 
 ReactDOM.render(<Hot />, document.querySelector('#root'));
