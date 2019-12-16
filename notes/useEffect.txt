@@ -1,0 +1,11 @@
+Hooks의 life style
+->없지만 흉내내기 가능
+useEffect -> component did mount 
+component did update 역할 (1:1 대응은 아님)
+
+useEffect(() => {
+    //func componentDidMount
+return () => {
+    //componentWillUnMount
+}
+},[] // componentUpdate)
