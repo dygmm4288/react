@@ -42,15 +42,17 @@ const App = () => {
 					</div>
 				) : (
 					<div className="movies">
-						{movies.map(v => {
+						{movies.map(movie => {
 							return (
 								<Movie
-									key={v.id}
-									id={v.id}
-									year={v.year}
-									title={v.title}
-									summary={v.summary}
-									poster={v.medium_cover_image}
+									key={movie.id}
+									id={movie.id}
+									year={movie.year}
+									title={movie.title}
+									summary={movie.summary}
+									poster={movie.medium_cover_image}
+									genres={movie.genres}
+									rating={movie.rating}
 								/>
 							);
 						})}

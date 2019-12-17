@@ -12,8 +12,8 @@ const { hot } = require("react-hot-loader/root");
 //import RSPHooks from "./component/RSPHooks.jsx";
 //import Lotto from "./component/Lotto.jsx";
 //import LottoHooks from "./component/LottoHooks.jsx";
-import App from "./component/nomad/App.jsx";
-
+//import App from "./component/nomad/App.jsx";
+import TicTacToe from "./component/TicTacToe/TicTacToe.jsx";
 //const Hot = hot(WordRelay);
 //const Hot = hot(BaseBall);
 //const Hot = hot(BaseBallHooks);
@@ -21,5 +21,5 @@ import App from "./component/nomad/App.jsx";
 //const Hot = hot(RSP);
 //const Hot = hot(Lotto);
 //const Hot = hot(LottoHooks);
-const Hot = hot(App);
+const Hot = hot(Tr);
 ReactDOM.render(<Hot />, document.querySelector("#root"));
