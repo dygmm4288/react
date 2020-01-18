@@ -1,28 +1,48 @@
 import React, { useCallback, useState, useRef } from "react";
-const makeObj = (key, value) => {
-	return { [key]: value };
-};
-const clearValue = () => "";
+
 export default function ToDoList() {
-	const [todoLists, setTodoLists] = useState([]);
+	const [todoList, setTodoList] = useState([]);
 
 	const inputValue = useRef(null);
+
 	const onSubmitForm = useCallback(
 		e => {
 			e.preventDefault();
 			const content = makeObj("content", inputValue.current.value);
 			const priority = makeObj("priority", 0);
+			const isFinish = makeObj("isFinish", false);
 
-			if (!todoLists.includes({ content: content })) {
-				setTodoLists([...todoLists, { ...content, ...priority }]);
+			if (!todoList.includes({ content: content })) {
+				setTodoList([
+					...todoList,
+					{ ...content, ...priority, ...isFinish }
+				]);
 			} else {
 				alert("이미 등록된 체크 리스트");
 			}
 			inputValue.current.value = clearValue();
 		},
-		[todoLists]
+		[todoList]
 	);
-
+	const onClickPriority = useCallback(
+		e => {
+			const content = e.currentTarget.getAttribute("data-content");
+			setTodoList(
+				todoList.map(item => {
+					if (item.content === content) item.priority += 1;
+					return item;
+				})
+			);
+		},
+		[todoList]
+	);
+	const onClickDelete = useCallback(
+		e => {
+			const content = e.currentTarget.getAttribute("data-content");
+			setTodoList(todoList.filter(item => item.content !== content));
+		},
+		[todoList]
+	);
 	return (
 		<>
 			<header>
@@ -37,39 +57,40 @@ export default function ToDoList() {
 				</form>
 				<section className="content">
 					<h2>Your ToDo List is...</h2>
-					{todoLists &&
-						todoLists.map(({ content, priority }) => (
-							<ToDoListItem
-								content={content}
-								priority={priority}
-								key={content}
-							/>
-						))}
+					{todoList &&
+						todoList.map(item => {
+							return (
+								<ToDoListItem
+									content={item.content}
+									onClickPriority={onClickPriority}
+									onClickDelete={onClickDelete}
+								/>
+							);
+						})}
 				</section>
 			</section>
 		</>
 	);
 }
-function ToDoListItem({ content, priority }) {
-	const onClickPriority = useCallback(() => {
-		console.log("onclick priority");
-	});
-	const onClickTrash = useCallback(() => {
-		console.log("onclicktrash");
-	});
+function ToDoListItem({ content, onClickPriority, onClickDelete }) {
 	return (
 		<>
 			<div className="content_item">
 				<p>{content}</p>
 				<nav>
-					<a href="#" onClick={onClickPriority}>
+					<button onClick={onClickPriority} data-content={content}>
 						up priority
-					</a>
-					<a href="#" onClick={onClickTrash}>
+					</button>
+					<button onClick={onClickDelete} data-content={content}>
 						trash
-					</a>
+					</button>
 				</nav>
 			</div>
 		</>
 	);
 }
+
+const makeObj = (key, value) => {
+	return { [key]: value };
+};
+const clearValue = () => "";
