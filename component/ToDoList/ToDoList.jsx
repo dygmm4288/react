@@ -1,6 +1,15 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState, useRef, memo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+	faTrash,
+	faArrowUp,
+	faCheckSquare,
+	faCheckCircle,
+	faEdit
+} from "@fortawesome/free-solid-svg-icons";
+import { createNoSubstitutionTemplateLiteral } from "typescript";
 
-export default function ToDoList() {
+export default memo(function TodoList() {
 	const [todoList, setTodoList] = useState([]);
 
 	const inputValue = useRef(null);
@@ -11,8 +20,10 @@ export default function ToDoList() {
 			const content = makeObj("content", inputValue.current.value);
 			const priority = makeObj("priority", 0);
 			const isFinish = makeObj("isFinish", false);
-
-			if (!todoList.includes({ content: content })) {
+			if (
+				todoList.filter(item => item.content === content.content)
+					.length === 0
+			) {
 				setTodoList([
 					...todoList,
 					{ ...content, ...priority, ...isFinish }
@@ -43,27 +54,35 @@ export default function ToDoList() {
 		},
 		[todoList]
 	);
+	const onClickFinish = useCallback(
+		e => {
+			const content = e.currentTarget.getAttribute("data-content");
+			setTodoList(
+				todoList.map(item => {
+					if (item.content === content) item.isFinish = true;
+					return item;
+				})
+			);
+		},
+		[todoList]
+	);
 	return (
 		<>
 			<header>
 				<h1>ToDoList</h1>
 			</header>
 			<section id="container">
-				<form action="#" onSubmit={onSubmitForm}>
-					<input ref={inputValue} type="text" name="todo" id="todo" />
-					<button type="submit">
-						<i>submit</i>
-					</button>
-				</form>
+				<TodoForm onSubmitForm={onSubmitForm} inputRef={inputValue} />
 				<section className="content">
 					<h2>Your ToDo List is...</h2>
 					{todoList &&
 						todoList.map(item => {
 							return (
-								<ToDoListItem
-									content={item.content}
+								<TodoListItem
+									item={item}
 									onClickPriority={onClickPriority}
 									onClickDelete={onClickDelete}
+									onClickFinish={onClickFinish}
 								/>
 							);
 						})}
@@ -71,21 +90,54 @@ export default function ToDoList() {
 			</section>
 		</>
 	);
-}
-function ToDoListItem({ content, onClickPriority, onClickDelete }) {
+});
+function TodoListItem({ item, onClickPriority, onClickDelete, onClickFinish }) {
+	const { content, isFinish } = item;
+
 	return (
 		<>
 			<div className="content_item">
-				<p>{content}</p>
+				{isFinish ? (
+					<p className="content_pargraph finish">{content}</p>
+				) : (
+					<p className="content_pargraph">{content}</p>
+				)}
 				<nav>
-					<button onClick={onClickPriority} data-content={content}>
-						up priority
+					<button onClick={onClickFinish} data-content={content}>
+						<FontAwesomeIcon icon={faCheckSquare} />
+					</button>
+					<button
+						onClick={onClickPriority}
+						data-content={content}
+						data-up={true}>
+						<FontAwesomeIcon icon={faArrowUp} rotation={180} />
+					</button>
+					<button
+						onClick={onClickPriority}
+						data-content={content}
+						data-up={false}>
+						<FontAwesomeIcon icon={faArrowUp} />
 					</button>
 					<button onClick={onClickDelete} data-content={content}>
-						trash
+						<FontAwesomeIcon icon={faTrash} />
 					</button>
 				</nav>
 			</div>
+		</>
+	);
+}
+function TodoForm({ onSubmitForm, inputRef }) {
+	return (
+		<>
+			<form action="#" onSubmit={onSubmitForm}>
+				<label htmlFor="todo">
+					<FontAwesomeIcon icon={faEdit} />
+				</label>
+				<input ref={inputRef} type="text" name="todo" id="todo" />
+				<button type="submit">
+					<FontAwesomeIcon icon={faCheckCircle} />
+				</button>
+			</form>
 		</>
 	);
 }
