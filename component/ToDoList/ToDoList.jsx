@@ -25,10 +25,11 @@ export default memo(function TodoList() {
 				todoList.filter(item => item.content === content.content)
 					.length === 0
 			) {
-				setTodoList([
-					...todoList,
-					{ ...content, ...priority, ...isDone }
-				]);
+				setTodoList(
+					[...todoList, { ...content, ...priority, ...isDone }].sort(
+						comparePriority
+					)
+				);
 			} else if (!content.content) {
 				alert("내용을 입력해주세요");
 			} else {
@@ -45,17 +46,13 @@ export default memo(function TodoList() {
 			const isPriorityUp = e.currentTarget.dataset.up;
 			switch (work) {
 				case "priority": {
-					isPriorityUp
-						? setTodoList(
-								todoList.map(item =>
-									plusPriority(item)(content)
-								)
-						  )
-						: setTodoList(
-								todoList.map(item =>
-									minusPriority(item)(content)
-								)
-						  );
+					setTodoList(
+						map(todoList, item =>
+							isPriorityUp === "true"
+								? plusPriority(item)(content)
+								: minusPriority(item)(content)
+						).sort(comparePriority)
+					);
 					return;
 				}
 				case "delete": {
@@ -108,6 +105,8 @@ const TodoListItem = memo(({ item, onClickIcon }) => {
 			setClassPriority("high");
 		} else if (priority > 3) {
 			setClassPriority("middle");
+		} else {
+			setClassPriority("");
 		}
 	}
 
@@ -178,6 +177,7 @@ const TodoForm = memo(({ onSubmitForm, inputRef }) => {
 });
 const FontAwesomeBtn = memo(({ onClick, ...props }) => {
 	const { work, isUp, content, icon, rotation, btnType, size } = props;
+
 	return (
 		<>
 			<button
@@ -218,7 +218,15 @@ const plusPriority = item => {
 };
 const minusPriority = item => {
 	return content => {
-		if (compareContent(item, content)) item.priority -= 1;
+		if (compareContent(item, content)) {
+			item.priority = item.priority ? item.priority - 1 : 0;
+		}
 		return item;
 	};
+};
+const comparePriority = (a, b) => {
+	return b.priority - a.priority;
+};
+const map = (list, func) => {
+	return list.map(func);
 };
