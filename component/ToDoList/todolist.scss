@@ -1,0 +1,143 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+button,
+input {
+	border: none;
+	background: white;
+}
+button:focus,
+input:focus {
+	outline: 0;
+}
+html,
+body,
+#root {
+	height: 100%;
+}
+$header_bg: #fcba7e;
+$form_bg: #ff7a00;
+@mixin h1Main {
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 2.25em;
+	line-height: 2.625em;
+}
+@mixin h2Sub {
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 1.5em;
+	line-height: 1.75em;
+}
+/* LAYOUTS */
+header {
+	width: 100%;
+	height: 40vw;
+	position: relative;
+	top: 0;
+	left: 0;
+	background-color: $header_bg;
+}
+#container {
+	width: 100%;
+	height: auto;
+	overflow: auto;
+}
+/* HEADER */
+header {
+	h1 {
+		@include h1Main;
+		text-align: center;
+		width: 100%;
+		height: 2.25em;
+		position: absolute;
+		top: calc(50% - 1.125em);
+	}
+}
+/* <!-- HEADER --> */
+/* CONTENT */
+#container form {
+	width: 335px;
+	height: 60px;
+	margin: 16px 12px 24px;
+	position: relative;
+	label {
+		position: absolute;
+		top: 18px;
+		left: 16px;
+	}
+	input {
+		background: $form_bg;
+		float: left;
+		width: 290px;
+		height: 100%;
+		border-radius: 20px;
+		box-sizing: border-box;
+		padding-left: 53px;
+		margin-right: 15px;
+		font-weight: bold;
+		font-size: 1.125em;
+	}
+	input::placeholder {
+		color: rgba(255, 255, 255, 0.5);
+	}
+	button {
+		float: left;
+		position: absolute;
+		top: calc(50% - 15px);
+		width: 30px;
+		height: 30px;
+	}
+	button:after {
+		content: "";
+		display: block;
+		clear: both;
+	}
+}
+#container .content {
+	height: auto;
+	h2 {
+		@include h2Sub;
+		color: rgba(0, 0, 0, 0.3);
+		padding-left: 35px;
+		margin-bottom: 5px;
+	}
+}
+.content .content_item {
+	margin: 15px 18px 0px;
+	border-radius: 10px;
+	padding: 0px 4px 0px 10px;
+	box-sizing: border-box;
+	min-height: 60px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	background-color: #fdd8d8;
+	p {
+		min-height: auto;
+		max-height: 40px;
+		max-width: 190px;
+		flex: 4;
+		font-size: 0.9em;
+	}
+	button {
+		flex: 1;
+		width: 25px;
+		height: 25px;
+		background-color: inherit;
+	}
+	p.done {
+		text-decoration: line-through;
+	}
+	&.high {
+		background-color: #ff4443;
+	}
+	&.middle {
+		background-color: #fd9393;
+	}
+}
+
+/* <!-- CONTENT --> */
